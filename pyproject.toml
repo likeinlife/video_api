@@ -48,6 +48,7 @@ ignore = [
     "D101",
     "D102",
     "D103",
+    "D104",
     # Allow type: ignore
     "PGH003",
     # Useless
