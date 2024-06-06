@@ -19,7 +19,11 @@ def create_session_maker(engine: sa_async.AsyncEngine) -> sa_async.async_session
 
 
 class Base(orm.MappedAsDataclass, orm.DeclarativeBase):
-    id: orm.Mapped[uuid.UUID] = orm.mapped_column(primary_key=True, init=False)
+    id: orm.Mapped[uuid.UUID] = orm.mapped_column(
+        primary_key=True,
+        init=False,
+        default_factory=uuid.uuid4,
+    )
     created_at: orm.Mapped[dt.datetime] = orm.mapped_column(server_default=sa.func.now(), init=False)
 
 

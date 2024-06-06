@@ -12,13 +12,13 @@ class DBSettings(BaseSettings):
     password: SecretStr = Field(init=False)
     user: SecretStr = Field(init=False)
     host: str = Field(init=False)
-    port: int = Field(default=5672, init=False)
+    port: int = Field(default=5432, init=False)
     db_name: str = Field(default="video", init=False)
 
-    @property
-    def url(self) -> str:
+    def get_url(self, async_: bool = True) -> str:
+        driver = "asyncpg" if async_ else "psycopg2"
         return (
-            f"postgresql+asyncpg://{self.user.get_secret_value()}:"
+            f"postgresql+{driver}://{self.user.get_secret_value()}:"
             f"{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db_name}"
         )
 
@@ -28,6 +28,12 @@ class LoggingSettings(BaseSettings):
 
     level: str = Field(default="INFO", init=False)
     json_format: bool = Field(default=False, init=False)
+
+
+class SessionSettings(BaseSettings):
+    model_config = _model_config(env_prefix="FARPOST_")
+
+    ttl: int = Field(default=60 * 60, init=False)
 
 
 class AppSettings(BaseSettings):
@@ -40,7 +46,9 @@ class AppSettings(BaseSettings):
 
 class Settings(BaseSettings):
     app: AppSettings = AppSettings()
+    db: DBSettings = DBSettings()
     log: LoggingSettings = LoggingSettings()
+    session: SessionSettings = SessionSettings()
 
 
 settings = Settings()
