@@ -15,6 +15,10 @@ lint:
 	ruff check video_api
 	mypy video_api
 
+.PHONY: lint
+env:
+	cp sample.env docker-compose/.env
+
 .PHONY: app
 app:
 	${DC} -f ${APP_FILE} ${ENV} up --build -d
