@@ -49,10 +49,13 @@ ignore = [
     "D102",
     "D103",
     "D104",
+    "D105",
+    "D107",
     # Allow type: ignore
     "PGH003",
     # Useless
     "FBT",
+    "F401",
 ]
 exclude = []
 
