@@ -6,19 +6,21 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 _model_config = partial(SettingsConfigDict, env_file=".env", extra="ignore")
 
 
-class RabbitSettings(BaseSettings):
-    model_config = _model_config(env_prefix="RABBIT_")
+class DBSettings(BaseSettings):
+    model_config = _model_config(env_prefix="DB_")
 
     password: SecretStr = Field(init=False)
     user: SecretStr = Field(init=False)
     host: str = Field(init=False)
     port: int = Field(default=5672, init=False)
-    message_exchange: str = Field(default="message-exchange", init=False)
-    message_queue: str = Field(default="message-queue", init=False)
+    db_name: str = Field(default="video", init=False)
 
     @property
     def url(self) -> str:
-        return f"amqp://{self.user.get_secret_value()}:{self.password.get_secret_value()}@{self.host}:{self.port}"
+        return (
+            f"postgresql+asyncpg://{self.user.get_secret_value()}:"
+            f"{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db_name}"
+        )
 
 
 class LoggingSettings(BaseSettings):
@@ -38,8 +40,7 @@ class AppSettings(BaseSettings):
 
 class Settings(BaseSettings):
     app: AppSettings = AppSettings()
-    logging: LoggingSettings = LoggingSettings()
-    rabbit: RabbitSettings = RabbitSettings()
+    log: LoggingSettings = LoggingSettings()
 
 
 settings = Settings()
