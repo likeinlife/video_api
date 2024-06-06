@@ -14,6 +14,7 @@ aiojobs = "^1.2.1"
 sqlalchemy = "^2.0.30"
 dishka = "^1.2.0"
 structlog = "^24.2.0"
+alembic = "^1.13.1"
 
 
 [tool.poetry.group.dev.dependencies]
