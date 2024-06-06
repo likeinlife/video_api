@@ -12,7 +12,7 @@ class DBSettings(BaseSettings):
     password: SecretStr = Field(init=False)
     user: SecretStr = Field(init=False)
     host: str = Field(init=False)
-    port: int = Field(default=5672, init=False)
+    port: int = Field(default=5432, init=False)
     db_name: str = Field(default="video", init=False)
 
     def get_url(self, async_: bool = True) -> str:
@@ -30,6 +30,12 @@ class LoggingSettings(BaseSettings):
     json_format: bool = Field(default=False, init=False)
 
 
+class FarPostSettings(BaseSettings):
+    model_config = _model_config(env_prefix="FARPOST_")
+
+    city: int = Field(init=False)
+
+
 class AppSettings(BaseSettings):
     model_config = _model_config(env_prefix="APP_")
 
@@ -42,6 +48,7 @@ class Settings(BaseSettings):
     app: AppSettings = AppSettings()
     db: DBSettings = DBSettings()
     log: LoggingSettings = LoggingSettings()
+    farpost: FarPostSettings = FarPostSettings()
 
 
 settings = Settings()

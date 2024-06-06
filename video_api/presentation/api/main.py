@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
+from core.log import configure_logging
 from core.settings import settings
 
 from . import error_handlers, middlewares, routes
@@ -10,6 +11,7 @@ from . import error_handlers, middlewares, routes
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001, ANN201
+    configure_logging(settings.log.level, settings.log.json_format)
     yield
 
 
