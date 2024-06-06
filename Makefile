@@ -4,6 +4,7 @@ LOGS = docker logs
 ENV = --env-file docker-compose/.env
 APP_FILE = docker-compose/app.yaml
 STORAGES_FILE = docker-compose/storages.yaml
+TEST_COMPOSE = tests/integrate/docker-compose-test.yaml
 APP_CONTAINER = app
 
 .PHONY: freeze
@@ -44,3 +45,8 @@ down-storages:
 down-all:
 	${MAKE} down-storages
 	${MAKE} down-app
+
+.PHONY: tests
+tests:
+	pytest tests/unit
+	${DC} -f ${TEST_COMPOSE} up --build --abort-on-container-exit --exit-code-from tests --attach tests
