@@ -1,0 +1,18 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "${APP_PORT}:8000"
+    # volumes:
+    #   - ../video_api/:/opt/app/
+    env_file:
+      - ".env"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

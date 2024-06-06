@@ -1,4 +1,4 @@
-FROM python:3.10.14-alpine3.20
+FROM python:3.11.9-alpine3.20
 
 WORKDIR /opt/app
 
@@ -13,6 +13,6 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY ./video_api .
 
-RUN chmod +x ./api-docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
 
 ENTRYPOINT ./docker-entrypoint.sh
