@@ -9,7 +9,7 @@ from logic.use_cases.interface import IUseCase
 @dataclass(frozen=True, eq=False)
 class FetchAdvertUseCase(IUseCase[uuid.UUID]):
     uow: UnitOfWork
-    advert_id: str
+    advert_id: uuid.UUID
 
     async def __call__(self) -> Advert | None:
         return await self.uow.advert.fetch(self.advert_id)

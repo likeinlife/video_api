@@ -13,8 +13,8 @@ class AdvertRepository(IAdvertRepository):
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
 
-    async def fetch(self, ad_id: str) -> Advert | None:
-        query = sa.select(AdvertORM).where(AdvertORM.ad_id == ad_id)
+    async def fetch(self, ad_id: uuid.UUID) -> Advert | None:
+        query = sa.select(AdvertORM).where(AdvertORM.id == ad_id)
         result = (await self.session.execute(query)).scalar_one_or_none()
         if result is None:
             return None

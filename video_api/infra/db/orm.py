@@ -4,8 +4,9 @@ from .base import Base
 
 
 class AdvertORM(Base):
+    __tablename__ = "advert"
+
     title: Mapped[str]
-    ad_id: Mapped[str] = mapped_column(primary_key=True, index=True)
     author: Mapped[str]
     view_count: Mapped[int]
     position: Mapped[int]

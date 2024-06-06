@@ -9,7 +9,7 @@ class AdvertInteractor:
     def __init__(self, uow: UnitOfWork) -> None:
         self.uow = uow
 
-    async def fetch(self, ad_id: str) -> Advert | None:
+    async def fetch(self, ad_id: uuid.UUID) -> Advert | None:
         async with self.uow:
             return await FetchAdvertUseCase(self.uow, ad_id)()
 
