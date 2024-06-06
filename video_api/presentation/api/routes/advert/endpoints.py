@@ -6,10 +6,11 @@ from fastapi import APIRouter, Depends, HTTPException, Path, Query
 
 from container import get_container
 from logic.interactors.advert import AdvertInteractor
+from presentation.api.routes.dependencies.user_getter import user_getter_dependency
 
 from .schemas import AdvertSchema
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(user_getter_dependency)])
 
 
 @router.get("/")
