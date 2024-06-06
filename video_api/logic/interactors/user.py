@@ -1,10 +1,8 @@
 import datetime as dt
 import uuid
 
-from domain.entities.advert import Advert
 from domain.entities.user import User
 from infra.uow import UnitOfWork
-from logic.use_cases.advert import CreateAdvertUseCase, FetchAdvertUseCase, FetchListAdvertUseCase
 from logic.use_cases.user.auth_session import AuthUserUseCase
 from logic.use_cases.user.create_user import CreateUserUseCase
 from logic.use_cases.user.fetch_user import FetchUserUseCase

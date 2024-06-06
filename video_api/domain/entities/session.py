@@ -2,8 +2,6 @@ import datetime as dt
 import uuid
 from dataclasses import dataclass
 
-from domain.values.login import UserLogin
-
 from .base import BaseEntity
 
 

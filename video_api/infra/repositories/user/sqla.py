@@ -3,11 +3,10 @@ import uuid
 import sqlalchemy as sa
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload
 
 from domain.entities.user import User
 from domain.protocols.user import IUserRepository
-from infra.db.orm import SessionORM, UserORM
+from infra.db.orm import UserORM
 from infra.mappers.user import UserORMMapper
 from infra.repositories.errors import UserLoginAlreadyExistsError
 

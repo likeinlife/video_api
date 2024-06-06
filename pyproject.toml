@@ -66,7 +66,6 @@ ignore = [
     "PGH003",
     # Useless
     "FBT",
-    "F401",
 ]
 exclude = []
 
@@ -80,7 +79,7 @@ extend-immutable-calls = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = []
+"__init__.py" = ["F401"]
 "tests/**/*.py" = ["D", "S", "ANN"]
 
 [tool.ruff.lint.isort]

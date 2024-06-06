@@ -1,12 +1,10 @@
 from dataclasses import dataclass
-from hashlib import sha512
 
 from domain.entities.user import User
-from domain.values.login import UserLogin
 from infra.uow import UnitOfWork
 from logic.use_cases.interface import IUseCase
 
-from .errors import UserNotFoundError, WrongPasswordError
+from .errors import UserNotFoundError
 
 
 @dataclass(frozen=True, eq=False)
