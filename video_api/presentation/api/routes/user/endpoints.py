@@ -2,7 +2,7 @@ import typing as tp
 
 from asyncpg import InvalidPasswordError
 from dishka import Container
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 
 from container import get_container
 from core.settings import settings
@@ -24,7 +24,7 @@ async def register(
     try:
         await interactor.create(user.login, user.password)
     except UserLoginAlreadyExistsError as e:
-        raise HTTPException(status_code=409, detail="User already exists") from e
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User already exists") from e
     return Response(status_code=201)
 
 
@@ -38,7 +38,7 @@ async def fetch_advert(
     try:
         result = await interactor.authenticate(user.login, user.password)
     except (InvalidPasswordError, UserNotFoundError) as e:
-        raise HTTPException(status_code=403, detail="Wrong password or login") from e
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Wrong password or login") from e
 
     response.set_cookie("Authorization", f"Bearer {result}", httponly=True, secure=True, expires=settings.session.ttl)
     return response
