@@ -15,10 +15,10 @@ class DBSettings(BaseSettings):
     port: int = Field(default=5672, init=False)
     db_name: str = Field(default="video", init=False)
 
-    @property
-    def url(self) -> str:
+    def get_url(self, async_: bool = True) -> str:
+        driver = "asyncpg" if async_ else "psycopg"
         return (
-            f"postgresql+asyncpg://{self.user.get_secret_value()}:"
+            f"postgresql+{driver}://{self.user.get_secret_value()}:"
             f"{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db_name}"
         )
 
@@ -40,6 +40,7 @@ class AppSettings(BaseSettings):
 
 class Settings(BaseSettings):
     app: AppSettings = AppSettings()
+    db: DBSettings = DBSettings()
     log: LoggingSettings = LoggingSettings()
 
 
