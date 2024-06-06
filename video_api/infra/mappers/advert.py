@@ -7,6 +7,7 @@ class AdvertORMMapper:
     @staticmethod
     def to_orm(advert: Advert) -> AdvertORM:
         return AdvertORM(
+            id=advert.id,
             title=advert.title,
             author=advert.author,
             view_count=advert.view_count.as_generic_type(),

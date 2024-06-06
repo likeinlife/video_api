@@ -6,8 +6,9 @@ services:
     container_name: app
     ports:
       - "${APP_PORT}:8000"
-    # volumes:
-    #   - ../video_api/:/opt/app/
+    volumes:
+      - ../video_api/:/opt/app/
+      - ../static/adverts.json/:/opt/static/adverts.json
     env_file:
       - ".env"
     networks:

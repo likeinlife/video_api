@@ -24,5 +24,5 @@ class LoginUserUseCase(IUseCase):
         if hashed_password != self.user.hash_password:
             raise WrongPasswordError(login=self.user.login.as_generic_type())
 
-        session_expire_at = dt.datetime.now(tz=dt.timezone.utc) + self.session_ttl
+        session_expire_at = dt.datetime.now(tz=None) + self.session_ttl  # noqa: DTZ005
         return await self.uow.session.create(Session(user_id=self.user.id, expired_at=session_expire_at))

@@ -16,7 +16,7 @@ class DBSettings(BaseSettings):
     db_name: str = Field(default="video", init=False)
 
     def get_url(self, async_: bool = True) -> str:
-        driver = "asyncpg" if async_ else "psycopg"
+        driver = "asyncpg" if async_ else "psycopg2"
         return (
             f"postgresql+{driver}://{self.user.get_secret_value()}:"
             f"{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db_name}"

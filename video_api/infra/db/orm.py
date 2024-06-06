@@ -10,6 +10,7 @@ from .base import Base
 class AdvertORM(Base):
     __tablename__ = "advert"
 
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, index=True, nullable=False)
     title: Mapped[str]
     author: Mapped[str]
     view_count: Mapped[int]
