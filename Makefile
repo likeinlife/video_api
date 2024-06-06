@@ -50,3 +50,7 @@ down-all:
 tests:
 	pytest tests/unit
 	${DC} -f ${TEST_COMPOSE} up --build --abort-on-container-exit --exit-code-from tests --attach tests
+
+.PHONY: down-tests
+down-tests:
+	${DC} -f ${TEST_COMPOSE} down -v
