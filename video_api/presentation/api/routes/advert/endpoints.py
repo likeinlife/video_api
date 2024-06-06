@@ -16,11 +16,11 @@ router = APIRouter(dependencies=[Depends(user_getter_dependency)])
 @router.get("/")
 async def fetch_advert_list(
     container: tp.Annotated[Container, Depends(get_container)],
-    limit: tp.Annotated[int, Query(gt=0, le=100)] = 10,
-    offset: tp.Annotated[int, Query(gt=0)] = 0,
+    limit: tp.Annotated[int, Query(ge=0, le=100)] = 10,
+    offset: tp.Annotated[int, Query(ge=0)] = 0,
 ) -> list[AdvertSchema]:
     interactor = container.get(AdvertInteractor)
-    result = await interactor.fetch_list(limit, offset)
+    result = await interactor.fetch_list(limit=limit, offset=offset)
     return [AdvertSchema.from_domain(advert) for advert in result]
 
 

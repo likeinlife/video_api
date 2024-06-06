@@ -5,6 +5,7 @@ from dishka import Container
 from fastapi import APIRouter, Depends, HTTPException, Response
 
 from container import get_container
+from core.settings import settings
 from infra.repositories.errors import UserLoginAlreadyExistsError
 from logic.interactors.user import UserInteractor
 from logic.use_cases.user.errors import UserNotFoundError
@@ -39,5 +40,5 @@ async def fetch_advert(
     except (InvalidPasswordError, UserNotFoundError) as e:
         raise HTTPException(status_code=403, detail="Wrong password or login") from e
 
-    response.headers["Authorization"] = f"Bearer {result}"
+    response.set_cookie("Authorization", f"Bearer {result}", httponly=True, secure=True, expires=settings.session.ttl)
     return response

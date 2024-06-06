@@ -15,7 +15,7 @@ class AdvertInteractor:
 
     async def fetch_list(self, limit: int, offset: int) -> list[Advert]:
         async with self.uow:
-            return await FetchListAdvertUseCase(self.uow, limit, offset)()
+            return await FetchListAdvertUseCase(self.uow, offset=offset, limit=limit)()
 
     async def create(self, advert: Advert) -> uuid.UUID:
         async with self.uow:

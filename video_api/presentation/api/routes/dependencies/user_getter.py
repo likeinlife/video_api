@@ -13,7 +13,7 @@ async def user_getter_dependency(
     request: Request,
     container: tp.Annotated[Container, Depends(get_container)],
 ) -> User:
-    session_token = request.headers.get("Authorization")
+    session_token = request.cookies.get("Authorization")
     if not session_token:
         raise HTTPException(status_code=403, detail="No session token provided")
 
