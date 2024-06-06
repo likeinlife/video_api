@@ -1,3 +1,4 @@
+import datetime as dt
 from functools import lru_cache
 
 from dishka import Container, Provider, Scope, make_container, provide
@@ -7,6 +8,7 @@ from core.settings import settings
 from infra.db.base import create_async_engine, create_session_maker
 from infra.uow import UnitOfWork
 from logic.interactors.advert import AdvertInteractor
+from logic.interactors.user import UserInteractor
 
 
 class AppProvider(Provider):
@@ -23,8 +25,13 @@ class AppProvider(Provider):
         return UnitOfWork(session_maker)
 
     @provide(scope=Scope.APP)
-    def _get_interactor(self, uow: UnitOfWork) -> AdvertInteractor:
+    def _get_advert_interactor(self, uow: UnitOfWork) -> AdvertInteractor:
         return AdvertInteractor(uow)
+
+    @provide(scope=Scope.APP)
+    def _get_user_interactor(self, uow: UnitOfWork) -> UserInteractor:
+        ttl = dt.timedelta(seconds=settings.session.ttl)
+        return UserInteractor(uow, ttl)
 
 
 @lru_cache(1)

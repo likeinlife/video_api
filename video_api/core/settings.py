@@ -30,10 +30,10 @@ class LoggingSettings(BaseSettings):
     json_format: bool = Field(default=False, init=False)
 
 
-class FarPostSettings(BaseSettings):
+class SessionSettings(BaseSettings):
     model_config = _model_config(env_prefix="FARPOST_")
 
-    city: int = Field(init=False)
+    ttl: int = Field(default=60 * 60, init=False)
 
 
 class AppSettings(BaseSettings):
@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     app: AppSettings = AppSettings()
     db: DBSettings = DBSettings()
     log: LoggingSettings = LoggingSettings()
-    farpost: FarPostSettings = FarPostSettings()
+    session: SessionSettings = SessionSettings()
 
 
 settings = Settings()
